@@ -1,5 +1,9 @@
 import os
+from dataclasses import dataclass
 
-BASE_URL = 'https://restful-booker.herokuapp.com' #os.environ.get('BASE_URL')
-USER_NAME = 'admin' #os.environ.get('_USER')
-PASSWORD = 'password123' #os.environ.get('PASSWORD')
+
+@dataclass
+class Config:
+    BASE_URL: str = os.getenv("BASE_URL", "https://restful-booker.herokuapp.com")
+    USERNAME: str = os.getenv("_USER", "admin")
+    PASSWORD: str = os.getenv("PASSWORD", "password123")

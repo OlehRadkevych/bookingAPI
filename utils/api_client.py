@@ -1,8 +1,11 @@
 import requests
+from config import Config
+
+config = Config()
 
 
 class APIClient:
-    def __init__(self, base_url, username, password):
+    def __init__(self, base_url=config.BASE_URL, username=config.USERNAME, password=config.PASSWORD):
         self.base_url = base_url
         self.auth_endpoint = '/auth'
         self.username = username
