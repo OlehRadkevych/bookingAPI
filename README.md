@@ -21,15 +21,15 @@ This project is designed for learning **Python Test Automation** using the publi
 ```
 bookingAPI/
 │── tests/               # Test cases
+│   │── conftest.py      # Pytest fixtures
 │   │── test_health_check.py
 │   │── test_create_booking.py
 │   │── test_update_booking.py
 │   │── test_delete_booking.py
 │── utils/               # Utility modules
 │   │── api_client.py
-│   │── user_booking.py
+│   │── booking.py
 │── config.py            # Configuration file (Dataclass with Env variables)
-│── conftest.py          # Pytest fixtures
 │── requirements.txt     # Required dependencies
 │── README.md            # Project documentation
 ```
