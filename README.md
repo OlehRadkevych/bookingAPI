@@ -1,7 +1,7 @@
 # Booking API Test Automation Framework
 
 ## Project Overview
-This project is designed for learning **Python Test Automation** using the public API [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html). The framework is built using **pytest, requests to validate API functionality efficiently.
+This project is designed for learning **Python Test Automation** using the public API [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html). The framework is built using **pytest and requests** to validate API functionality efficiently.
 
 ## Features
 - **Automated API Testing** using `pytest`
