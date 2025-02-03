@@ -5,24 +5,25 @@ config = Config()
 
 
 class APIClient:
-    def __init__(self, base_url=config.BASE_URL, username=config.USERNAME, password=config.PASSWORD):
+    def __init__(self, base_url=config.BASE_URL, username=config.USERNAME, password=config.PASSWORD, auth_token =config.AUTH_TOKEN):
         self.base_url = base_url
         self.auth_endpoint = '/auth'
         self.username = username
         self.password = password
-        self.auth_token = None
+        self.cookie = None
+        self.auth_token = auth_token
 
     def authenticate(self):
         response = requests.post(f"{self.base_url}{self.auth_endpoint}",
                                  json={"username": self.username, "password": self.password})
         if response.status_code == 200:
-            self.auth_token = response.json().get("token")
+            self.cookie = f'token={response.json().get("token")}'
         else:
             raise Exception(f"Authentication failed: {response.status_code}, {response.text}")
 
     def _get_headers(self, headers):
         default_headers = {
-            "Authorization": f"Bearer {self.auth_token}" if self.auth_token else None,
+            "Authorization": f'Basic {self.auth_token}',
             "Content-Type": "application/json"
         }
         if headers:

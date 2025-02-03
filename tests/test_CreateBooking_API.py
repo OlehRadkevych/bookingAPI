@@ -1,7 +1,7 @@
 from utils.booking import Booking
 
 
-def test_create_valid_booking(api_client, booking: Booking):
+def test_create_valid_booking(api_client, create_booking, booking: Booking):
     payload = booking.booking_data()
     response = api_client.post('/booking', json=payload)
     assert response.status_code == 200

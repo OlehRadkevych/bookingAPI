@@ -1,6 +1,7 @@
 from faker import Faker
 from utils.api_client import APIClient
 
+
 class Booking():
     def __init__(self):
         self.faker = Faker()
@@ -15,7 +16,6 @@ class Booking():
         }
         self.additionalneeds = self.faker.word()
         self.bookingid = None
-
 
     def booking_data(self):
         return {
@@ -40,9 +40,26 @@ class Booking():
             "additionalneeds": 12345
         }
 
-    def create_booking_valid_data(self):
-        self.api_client.authenticate()
+    def create_booking_id(self):
         payload = self.booking_data()
         response = self.api_client.post('/booking', json=payload)
         self.bookingid = response.json()['bookingid']
         return self.bookingid
+
+    def delete_booking_id(self):
+        booking_id = self.bookingid
+        if self.bookingid:
+            try:
+                response = self.api_client.delete(endpoint=f'/booking/{booking_id}')
+                assert response.status_code == 200
+
+            except Exception as e:
+                print(e)
+        else:
+            print('Booking ID is missed')
+
+
+if __name__ == '__main__':
+    booking = Booking()
+    booking.create_booking_id()
+    booking.delete_booking_id()

@@ -1,10 +1,9 @@
 from schema import Schema, Use, Or
 
 
-def test_get_booking_valid(api_client, booking):
-    booking_id = booking.create_booking_valid_data()
+def test_get_booking_valid(api_client, create_booking):
+    booking_id = create_booking
     response = api_client.get(f'/booking/{booking_id}')
-    assert response.status_code == 200
 
     schema = Schema({
         'firstname': str,
@@ -17,6 +16,8 @@ def test_get_booking_valid(api_client, booking):
         },
         'additionalneeds': Or(str, None)
     })
+
+    assert response.status_code == 200
     assert schema.is_valid(response.json())
 
 
