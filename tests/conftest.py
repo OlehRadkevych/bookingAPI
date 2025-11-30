@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import pytest
 from utils.api_client import APIClient
 from utils.booking import Booking
@@ -14,12 +17,11 @@ def api_client():
 @pytest.fixture(scope="session")  # Run after all tests finish
 def generate_report(request):
     yield
-    # Get the current date and time
+    reports_dir = Path(request.config.rootpath) / "reports"
+    reports_dir.mkdir(exist_ok=True)
     now = datetime.datetime.now()
-    report_file = f"report_{now.strftime('%Y%m%d_%H%M%S')}.html"
-
-    # Generate the HTML report
-    pytest.main(['--html=' + report_file])
+    report_file = reports_dir / f"report_{now.strftime('%Y%m%d_%H%M%S')}.html"
+    pytest.main([f"--html={report_file}"])
 
 
 @pytest.fixture(scope='function')

@@ -32,7 +32,7 @@ class Booking():
             "firstname": "",
             "lastname": "",
             "totalprice": -100,
-            "depositpaid": None,
+            "depositpaid": "",
             "bookingdates": {
                 "checkin": "invalid_date",
                 "checkout": "invalid_date"

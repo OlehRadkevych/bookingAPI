@@ -9,7 +9,6 @@ def booking() -> Booking:
 
 def test_get_booking_ids_all(api_client, booking: Booking):
     response = api_client.get("/booking")
-    print(repr(booking))
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
@@ -19,7 +18,6 @@ def test_get_booking_ids_by_first_name(api_client, booking: Booking):
         'firstname': booking.firstname
     }
     response = api_client.get("/booking", params=params)
-    print(repr(booking))
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
