@@ -11,8 +11,8 @@ class Booking():
         self.totalprice = self.faker.random_int(min=50, max=500)
         self.depositpaid = self.faker.boolean()
         self.bookingdates = {
-            "checkin": self.faker.date_between(start_date="-1y", end_date="today").isoformat(),
-            "checkout": self.faker.date_between(start_date="today", end_date="+1y").isoformat()
+            "checkin": self.faker.date_between(start_date="today", end_date="+1m").isoformat(),
+            "checkout": self.faker.date_between(start_date="+1m", end_date="+1y").isoformat()
         }
         self.additionalneeds = self.faker.word()
         self.bookingid = None

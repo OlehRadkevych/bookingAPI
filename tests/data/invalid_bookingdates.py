@@ -1,11 +1,11 @@
 INVALID_BOOKINGDATES = [
     None,
-    {"checkin": "2025-12-02", "checkout": "2025-12-01"},     # checkout earlier
-    {"checkin": "2025-12-01", "checkout": "2025-12-01"},     # same day
-    {"checkin": "", "checkout": "2019-01-01"},               # missing checkin
-    {"checkin": "2018-01-01", "checkout": ""},               # missing checkout
-    {"checkin": "01-01-2018", "checkout": "2019/01/01"},     # wrong format 1
-    {"checkin": "2018.01.01", "checkout": "2019.01.01"},     # wrong format 2
+    {"checkin": "2025-12-02", "checkout": "2025-12-01"},
+    {"checkin": "2025-12-01", "checkout": "2025-12-01"},
+    {"checkin": "", "checkout": "2019-01-01"},
+    {"checkin": "2018-01-01", "checkout": ""},
+    {"checkin": "01-01-2018", "checkout": "2019/01/01"},
+    {"checkin": "2018.01.01", "checkout": "2019.01.01"},
 ]
 
 INVALID_BOOKINGDATES_IDS = [
