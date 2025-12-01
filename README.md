@@ -32,7 +32,11 @@ bookingAPI/
 
 ## Setup
 1. Ensure Python 3.12+ is available.
-2. Install dependencies:
+2. Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   ```
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
@@ -45,12 +49,18 @@ Environment variables can override defaults in `config.py`:
 - `AUTH_TOKEN` – Base64-encoded Basic auth token.
 
 ## Running Tests
-Execute the full suite from the repository root:
-```bash
-pytest
-```
-The `api_client` fixture authenticates once per module before issuing requests. 
-The `create_booking` fixture provisions a booking for tests that require an existing record and cleans it up afterward.
+Follow these steps from the repository root:
+
+1. Activate the virtual environment:
+   ```bash
+   source .venv/bin/activate
+   ```
+2. Run the test suite with `PYTHONPATH` set:
+   ```bash
+   PYTHONPATH=. pytest
+   ```
+
+The `api_client` fixture authenticates once per module before issuing requests. The `create_booking` fixture provisions a booking for tests that require an existing record and cleans it up afterward.
 
 ### HTML Report (optional)
 A session-scoped `generate_report` fixture triggers a secondary pytest run with `--html=<file>` after the suite finishes. Install `pytest-html` if you want this report to succeed:
