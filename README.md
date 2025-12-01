@@ -1,42 +1,72 @@
 # Booking API Test Automation Framework
 
 ## Project Overview
-This project is designed for learning **Python Test Automation** using the public API [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html). The framework is built using **pytest and requests** to validate API functionality efficiently.
+This repository contains automated tests for the public [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html). The suite focuses on creating, retrieving, updating, and partially updating bookings, plus basic health and lookup checks, using `pytest` and `requests`.
 
-## Features
-- **Automated API Testing** using `pytest`
-- **Dynamic Test Data Generation** with `faker`
-- **Environment Configuration Management** using `dotenv`
-- **Reusable API Client** to handle API interactions
-- **Pytest Fixtures** for better test setup and teardown
-
-## Technologies Used
-- **Python 3.12**
-- **pytest** (for test execution)
-- **requests** (for API interactions)
-- **Faker** (for generating test data)
-- **Dotenv** (for managing environment variables)
+## Key Features
+- Authenticated API client with Basic auth credentials read from environment variables.
+- Faker-powered booking data generator for dynamic payloads and negative test cases.
+- Pytest fixtures for authenticated sessions, booking lifecycle management, and optional HTML report generation.
+- Schema-based validation for booking retrieval responses.
+- Parameterized tests covering invalid names, booking dates, and pricing scenarios.
 
 ## Project Structure
 ```
 bookingAPI/
-│── tests/               # Test cases
-│   │── conftest.py      # Pytest fixtures
-│   │── test_health_check.py
-│   │── test_create_booking.py
-│   │── test_update_booking.py
-│   │── test_delete_booking.py
-│── utils/               # Utility modules
-│   │── api_client.py
-│   │── booking.py
-│── config.py            # Configuration file (Dataclass with Env variables)
-│── requirements.txt     # Required dependencies
-│── README.md            # Project documentation
+├── config.py              # Default base URL and credentials loaded from environment variables
+├── requirements.txt       # Test dependencies
+├── utils/
+│   ├── api_client.py      # Authenticated HTTP client wrapper
+│   └── booking.py         # Booking data factory and helper methods
+├── tests/
+│   ├── conftest.py        # Shared fixtures (API client, booking factory, report hook)
+│   ├── data/              # Reusable invalid data matrices
+│   ├── test_HealthCheck_API.py
+│   ├── test_GetBookingIds_API.py
+│   ├── test_GetBooking_API.py
+│   ├── test_CreateBooking_API.py
+│   ├── test_UpdateBooking_API.py
+│   └── test_PartialUpdateBooking_API.py
+└── README.md
 ```
 
-## Future Improvements
-- Add **Logging** for enhanced debugging and reporting
-- Implement **parallel test execution** for performance optimization
-- Integrate **CI/CD pipeline** for automated test execution
-- Add **Allure Reporting** for better test visualization
+## Setup
+1. Ensure Python 3.12+ is available.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
+## Configuration
+Environment variables can override defaults in `config.py`:
+- `BASE_URL` – API host.
+- `_USER` – Username for authentication.
+- `PASSWORD` – Password for authentication .
+- `AUTH_TOKEN` – Base64-encoded Basic auth token.
+
+## Running Tests
+Execute the full suite from the repository root:
+```bash
+pytest
+```
+The `api_client` fixture authenticates once per module before issuing requests. 
+The `create_booking` fixture provisions a booking for tests that require an existing record and cleans it up afterward.
+
+### HTML Report (optional)
+A session-scoped `generate_report` fixture triggers a secondary pytest run with `--html=<file>` after the suite finishes. Install `pytest-html` if you want this report to succeed:
+```bash
+pip install pytest-html
+```
+Generated reports are saved under `reports/` with a 'reports' filename.
+
+## What the Tests Cover
+- **Health check:** `/ping` returns 201.
+- **Booking lookup:** `/booking` list retrieval and filtering by first name, last name, check-in, and check-out dates.
+- **Booking details:** `/booking/{id}` returns a schema-valid booking for existing IDs and 404 when missing.
+- **Create booking:** happy-path creation plus invalid names, prices, and date combinations.
+- **Update booking (PUT):** full updates with valid data and validation of invalid names, dates, prices, and malformed payloads.
+- **Partial update (PATCH):** firstname/lastname updates and validation against invalid names, dates, prices, or null fields.
+
+## Additional Notes
+- The API client raises an exception if authentication fails; ensure credentials are valid before running tests.
+- Faker-generated data means payloads differ per run, which helps surface edge cases.
