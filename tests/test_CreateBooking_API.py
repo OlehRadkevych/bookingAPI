@@ -7,7 +7,9 @@ from tests.data.invalid_bookingdates import INVALID_BOOKINGDATES, INVALID_BOOKIN
 
 def test_create_valid_booking(api_client, create_booking, booking: Booking):
     payload = booking.booking_data()
+
     response = api_client.post('/booking', json=payload)
+
     assert response.status_code == 200
     assert response.json()['booking'] == payload
     assert 'bookingid' in response.json()
@@ -34,7 +36,9 @@ def test_create_invalid_first_last_names(api_client, booking: Booking, firstname
 def test_create_invalid_booking_negative_total_price(api_client, booking: Booking, invalid_totalprice):
     payload = booking.booking_data()
     payload["totalprice"] = invalid_totalprice
+
     response = api_client.post("/booking", json=payload)
+
     assert response.status_code == 400
     assert "bookingid" not in response.json()
 
@@ -44,13 +48,17 @@ def test_create_invalid_booking_negative_total_price(api_client, booking: Bookin
 def test_create_invalid_booking_wrong_dates(api_client, booking: Booking, invalid_bookingdates):
     payload = booking.booking_data()
     payload["bookingdates"] = invalid_bookingdates
+
     response = api_client.post("/booking", json=payload)
+
     assert response.status_code == 400
     assert "bookingid" not in response.json()
 
 
 def test_create_invalid_booking(api_client, booking: Booking):
     payload = booking.invalid_booking_data()
+
     response = api_client.post('/booking', json=payload)
+
     assert response.status_code == 500
     assert response.text == 'Internal Server Error'
