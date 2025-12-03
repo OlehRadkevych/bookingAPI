@@ -14,7 +14,7 @@ def api_client():
     return client
 
 
-@pytest.fixture(scope="session")  # Run after all tests finish
+@pytest.fixture(scope="session")
 def generate_report(request):
     yield
     reports_dir = Path(request.config.rootpath) / "reports"
