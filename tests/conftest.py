@@ -14,14 +14,14 @@ def api_client():
     return client
 
 
-@pytest.fixture(scope="session")
-def generate_report(request):
-    yield
-    reports_dir = Path(request.config.rootpath) / "reports"
-    reports_dir.mkdir(exist_ok=True)
-    now = datetime.datetime.now()
-    report_file = reports_dir / f"report_{now.strftime('%Y%m%d_%H%M%S')}.html"
-    pytest.main([f"--html={report_file}"])
+# @pytest.fixture(scope="session")
+# def generate_report(request):
+#     yield
+#     reports_dir = Path(request.config.rootpath) / "reports"
+#     reports_dir.mkdir(exist_ok=True)
+#     now = datetime.datetime.now()
+#     report_file = reports_dir / f"report_{now.strftime('%Y%m%d_%H%M%S')}.html"
+#     pytest.main([f"--html={report_file}"])
 
 
 @pytest.fixture(scope='function')
